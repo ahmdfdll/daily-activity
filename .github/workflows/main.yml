@@ -1,0 +1,28 @@
+
+name: Daily Contribution
+
+on:
+  schedule:
+    - cron: '17 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update activity
+        run: |
+          date -u +"Last update: %Y-%m-%d" > DAILY.md
+
+      - name: Commit
+        run: |
+          git config user.name "ahmdfdll"
+          git config user.email "fadilmubarrok0@gmail.com"
+          git add DAILY.md
+          git commit -m "Daily update"
+          git push
